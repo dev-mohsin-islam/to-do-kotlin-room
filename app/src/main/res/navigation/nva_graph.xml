@@ -18,5 +18,9 @@
         android:id="@+id/newToDoFragment"
         android:name="com.example.todolist.NewToDoFragment"
         android:label="fragment_new_to_do"
-        tools:layout="@layout/fragment_new_to_do" />
+        tools:layout="@layout/fragment_new_to_do" >
+        <action
+            android:id="@+id/backTodoListAction"
+            app:destination="@id/toDoListFragment" />
+    </fragment>
 </navigation>

@@ -1,5 +1,6 @@
 package com.example.todolist
 
+import android.nfc.Tag
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,12 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.todolist.databinding.FragmentNewToDoBinding
 import com.example.todolist.dialogs.DatePickerDialogFragment
 import com.example.todolist.dialogs.TimePickerDialogFragment
 import com.example.todolist.entities.TodoModel
+import com.example.todolist.viewmodels.TodoViewModel
 import getFormattedDateTime
 import priority_medium
+import todo_edit
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,16 +30,17 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class NewToDoFragment : Fragment() {
-   private lateinit var binding: FragmentNewToDoBinding
-   private  var priority = priority_medium
+    private lateinit var binding: FragmentNewToDoBinding
+    private  var priority = priority_medium
     private var dateTimeInMillis = System.currentTimeMillis()
     private var timeInMillis = System.currentTimeMillis()
+    private val todoViewModel: TodoViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-         binding = FragmentNewToDoBinding.inflate(inflater, container, false)
+        binding = FragmentNewToDoBinding.inflate(inflater, container, false)
         binding.priorityRG.setOnCheckedChangeListener { radioGroup, checkedId ->
             val rb = radioGroup.findViewById<RadioButton>(checkedId)
             priority = rb.text.toString()
@@ -69,11 +75,12 @@ class NewToDoFragment : Fragment() {
                 time = timeInMillis,
                 priority = priority
             )
-//            val action = NewToDoFragmentDirections.actionNewToDoFragmentToToDoListFragment(todo)
-//            findNavController().navigate(action)
+            todoViewModel.insertTodo(todo)
+            findNavController().navigate(R.id.backTodoListAction)
         }
         return binding.root
     }
+
 
 
 }

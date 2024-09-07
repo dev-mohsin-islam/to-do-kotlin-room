@@ -52,4 +52,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler) // For Kotlin use kapt instead of annotationProcessor
+    annotationProcessor(libs.androidx.room.compiler)
+    implementation("androidx.room:room-ktx:2.5.1")
+
+
 }
